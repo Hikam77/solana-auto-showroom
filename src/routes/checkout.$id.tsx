@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useWallet } from "@/lib/wallet";
 import { ClientOnly } from "@/components/ClientOnly";
-import { buildUsdcTransferTx, getSolBalance, getUsdcBalance, requestAirdrop, type SolanaNetwork } from "@/lib/solana";
+import type { SolanaNetwork } from "@/lib/solana-shared";
 import { formatIDR, formatSOL, formatUSDC, idrToUsdc, shortAddr, todayInvoiceNumber } from "@/lib/format";
 import { toast } from "sonner";
 import { ArrowLeft, Wallet, CheckCircle2, Loader2, Sparkles, AlertCircle } from "lucide-react";
