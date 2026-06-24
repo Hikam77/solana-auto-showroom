@@ -11,10 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MyTransactionsRouteImport } from './routes/my-transactions'
 import { Route as CatalogRouteImport } from './routes/catalog'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as InvoiceInvoiceNumberRouteImport } from './routes/invoice.$invoiceNumber'
 import { Route as CheckoutIdRouteImport } from './routes/checkout.$id'
 import { Route as CarIdRouteImport } from './routes/car.$id'
+import { Route as AdminWeb3RouteImport } from './routes/admin.web3'
+import { Route as AdminTransactionsRouteImport } from './routes/admin.transactions'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminCarsRouteImport } from './routes/admin.cars'
 
 const MyTransactionsRoute = MyTransactionsRouteImport.update({
   id: '/my-transactions',
@@ -26,10 +32,20 @@ const CatalogRoute = CatalogRouteImport.update({
   path: '/catalog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const InvoiceInvoiceNumberRoute = InvoiceInvoiceNumberRouteImport.update({
   id: '/invoice/$invoiceNumber',
@@ -46,61 +62,116 @@ const CarIdRoute = CarIdRouteImport.update({
   path: '/car/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminWeb3Route = AdminWeb3RouteImport.update({
+  id: '/web3',
+  path: '/web3',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCarsRoute = AdminCarsRouteImport.update({
+  id: '/cars',
+  path: '/cars',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/admin/cars': typeof AdminCarsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/web3': typeof AdminWeb3Route
   '/car/$id': typeof CarIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
   '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/admin/cars': typeof AdminCarsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/web3': typeof AdminWeb3Route
   '/car/$id': typeof CarIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
   '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/admin/cars': typeof AdminCarsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/web3': typeof AdminWeb3Route
   '/car/$id': typeof CarIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
   '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/catalog'
     | '/my-transactions'
+    | '/admin/cars'
+    | '/admin/settings'
+    | '/admin/transactions'
+    | '/admin/web3'
     | '/car/$id'
     | '/checkout/$id'
     | '/invoice/$invoiceNumber'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/catalog'
     | '/my-transactions'
+    | '/admin/cars'
+    | '/admin/settings'
+    | '/admin/transactions'
+    | '/admin/web3'
     | '/car/$id'
     | '/checkout/$id'
     | '/invoice/$invoiceNumber'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/catalog'
     | '/my-transactions'
+    | '/admin/cars'
+    | '/admin/settings'
+    | '/admin/transactions'
+    | '/admin/web3'
     | '/car/$id'
     | '/checkout/$id'
     | '/invoice/$invoiceNumber'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   CatalogRoute: typeof CatalogRoute
   MyTransactionsRoute: typeof MyTransactionsRoute
   CarIdRoute: typeof CarIdRoute
@@ -124,12 +195,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/invoice/$invoiceNumber': {
       id: '/invoice/$invoiceNumber'
@@ -152,11 +237,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/web3': {
+      id: '/admin/web3'
+      path: '/web3'
+      fullPath: '/admin/web3'
+      preLoaderRoute: typeof AdminWeb3RouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/transactions': {
+      id: '/admin/transactions'
+      path: '/transactions'
+      fullPath: '/admin/transactions'
+      preLoaderRoute: typeof AdminTransactionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/cars': {
+      id: '/admin/cars'
+      path: '/cars'
+      fullPath: '/admin/cars'
+      preLoaderRoute: typeof AdminCarsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminCarsRoute: typeof AdminCarsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTransactionsRoute: typeof AdminTransactionsRoute
+  AdminWeb3Route: typeof AdminWeb3Route
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCarsRoute: AdminCarsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTransactionsRoute: AdminTransactionsRoute,
+  AdminWeb3Route: AdminWeb3Route,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   CatalogRoute: CatalogRoute,
   MyTransactionsRoute: MyTransactionsRoute,
   CarIdRoute: CarIdRoute,
