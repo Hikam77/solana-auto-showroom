@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { Transaction } from "@solana/web3.js";
+import type { Transaction } from "@solana/web3.js";
 import { toast } from "sonner";
 
 export type WalletProviderName = "phantom" | "solflare" | "backpack";
