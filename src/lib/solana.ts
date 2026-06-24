@@ -1,3 +1,5 @@
+// CLIENT-ONLY. Import this file via `await import("@/lib/solana")` from client code only.
+// Top-level @solana imports are not resolvable in the Worker SSR build.
 import {
   Connection,
   PublicKey,
@@ -14,13 +16,9 @@ import {
   getMint,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-
-export type SolanaNetwork = "devnet" | "mainnet-beta";
-
-export const USDC_MINTS: Record<SolanaNetwork, string> = {
-  devnet: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-  "mainnet-beta": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-};
+import { USDC_MINTS, type SolanaNetwork } from "./solana-shared";
+export type { SolanaNetwork } from "./solana-shared";
+export { USDC_MINTS, explorerTxUrl, explorerAddrUrl } from "./solana-shared";
 
 export const getConnection = (network: SolanaNetwork = "devnet") => {
   return new Connection(clusterApiUrl(network), "confirmed");
