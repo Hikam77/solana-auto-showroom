@@ -95,15 +95,6 @@ export const buildUsdcTransferTx = async (
   return { tx, connection: conn };
 };
 
-export const explorerTxUrl = (sig: string, network: SolanaNetwork = "devnet") => {
-  const cluster = network === "mainnet-beta" ? "" : `?cluster=${network}`;
-  return `https://explorer.solana.com/tx/${sig}${cluster}`;
-};
-
-export const explorerAddrUrl = (addr: string, network: SolanaNetwork = "devnet") => {
-  const cluster = network === "mainnet-beta" ? "" : `?cluster=${network}`;
-  return `https://explorer.solana.com/address/${addr}${cluster}`;
-};
 
 export const requestAirdrop = async (address: string, network: SolanaNetwork = "devnet") => {
   if (network !== "devnet") throw new Error("Airdrop only on devnet");
