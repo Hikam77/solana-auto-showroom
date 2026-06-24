@@ -64,8 +64,9 @@ function AdminSettingsPage() {
 
   const save = useMutation({
     mutationFn: async () => {
-      if (form.dealer_wallet && !isValidAddress(form.dealer_wallet)) {
-        throw new Error("Alamat dealer wallet bukan public key Solana yang valid");
+      if (form.dealer_wallet) {
+        const { isValidAddress } = await import("@/lib/solana");
+        if (!isValidAddress(form.dealer_wallet)) throw new Error("Alamat dealer wallet bukan public key Solana yang valid");
       }
       if (data?.id) {
         const { error } = await supabase.from("settings").update(form).eq("id", data.id);
