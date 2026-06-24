@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MyTransactionsRouteImport } from './routes/my-transactions'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -22,6 +23,11 @@ import { Route as AdminTransactionsRouteImport } from './routes/admin.transactio
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminCarsRouteImport } from './routes/admin.cars'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MyTransactionsRoute = MyTransactionsRouteImport.update({
   id: '/my-transactions',
   path: '/my-transactions',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/cars': typeof AdminCarsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/cars': typeof AdminCarsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/catalog': typeof CatalogRoute
   '/my-transactions': typeof MyTransactionsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/cars': typeof AdminCarsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/catalog'
     | '/my-transactions'
+    | '/sitemap.xml'
     | '/admin/cars'
     | '/admin/settings'
     | '/admin/transactions'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/'
     | '/catalog'
     | '/my-transactions'
+    | '/sitemap.xml'
     | '/admin/cars'
     | '/admin/settings'
     | '/admin/transactions'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/catalog'
     | '/my-transactions'
+    | '/sitemap.xml'
     | '/admin/cars'
     | '/admin/settings'
     | '/admin/transactions'
@@ -174,6 +186,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   CatalogRoute: typeof CatalogRoute
   MyTransactionsRoute: typeof MyTransactionsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CarIdRoute: typeof CarIdRoute
   CheckoutIdRoute: typeof CheckoutIdRoute
   InvoiceInvoiceNumberRoute: typeof InvoiceInvoiceNumberRoute
@@ -181,6 +194,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my-transactions': {
       id: '/my-transactions'
       path: '/my-transactions'
@@ -291,6 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   CatalogRoute: CatalogRoute,
   MyTransactionsRoute: MyTransactionsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CarIdRoute: CarIdRoute,
   CheckoutIdRoute: CheckoutIdRoute,
   InvoiceInvoiceNumberRoute: InvoiceInvoiceNumberRoute,
@@ -298,3 +319,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
