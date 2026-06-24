@@ -76,6 +76,7 @@ function CheckoutInner() {
     if (!wallet.address) return;
     setLoadingBal(true);
     try {
+      const { getSolBalance, getUsdcBalance } = await import("@/lib/solana");
       const [s, u] = await Promise.all([getSolBalance(wallet.address, network), getUsdcBalance(wallet.address, network)]);
       setSol(s);
       setUsdc(u);
@@ -88,6 +89,7 @@ function CheckoutInner() {
     if (!wallet.address) return;
     setAirdropping(true);
     try {
+      const { requestAirdrop } = await import("@/lib/solana");
       await requestAirdrop(wallet.address, network);
       toast.success("Airdrop 1 SOL berhasil (devnet)");
       await refreshBalances();
