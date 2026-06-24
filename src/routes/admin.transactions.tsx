@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatIDR, formatUSDC, formatDate, shortAddr } from "@/lib/format";
 import { Search, FileText, ExternalLink } from "lucide-react";
-import { explorerTxUrl, type SolanaNetwork } from "@/lib/solana";
+import { explorerTxUrl, type SolanaNetwork } from "@/lib/solana-shared";
 
 export const Route = createFileRoute("/admin/transactions")({
   head: () => ({ meta: [{ title: "Transaksi — Admin" }] }),

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatIDR, formatUSDC, formatDate, shortAddr } from "@/lib/format";
 import { downloadInvoicePDF } from "@/lib/pdf";
-import { explorerTxUrl, type SolanaNetwork } from "@/lib/solana";
+import { explorerTxUrl, type SolanaNetwork } from "@/lib/solana-shared";
 import { Download, Printer, ExternalLink, ArrowLeft, CheckCircle2, Clock, XCircle, Car } from "lucide-react";
 
 const invoiceQuery = (invoiceNumber: string) =>

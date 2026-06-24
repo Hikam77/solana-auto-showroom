@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatUSDC, formatDate, shortAddr } from "@/lib/format";
 import { Activity, Coins, Users, ArrowUpRight, ExternalLink } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { explorerAddrUrl, explorerTxUrl, type SolanaNetwork } from "@/lib/solana";
+import { explorerAddrUrl, explorerTxUrl, type SolanaNetwork } from "@/lib/solana-shared";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/admin/web3")({
