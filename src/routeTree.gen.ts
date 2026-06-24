@@ -9,38 +9,121 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MyTransactionsRouteImport } from './routes/my-transactions'
+import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InvoiceInvoiceNumberRouteImport } from './routes/invoice.$invoiceNumber'
+import { Route as CheckoutIdRouteImport } from './routes/checkout.$id'
+import { Route as CarIdRouteImport } from './routes/car.$id'
 
+const MyTransactionsRoute = MyTransactionsRouteImport.update({
+  id: '/my-transactions',
+  path: '/my-transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogRoute = CatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvoiceInvoiceNumberRoute = InvoiceInvoiceNumberRouteImport.update({
+  id: '/invoice/$invoiceNumber',
+  path: '/invoice/$invoiceNumber',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutIdRoute = CheckoutIdRouteImport.update({
+  id: '/checkout/$id',
+  path: '/checkout/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarIdRoute = CarIdRouteImport.update({
+  id: '/car/$id',
+  path: '/car/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/my-transactions': typeof MyTransactionsRoute
+  '/car/$id': typeof CarIdRoute
+  '/checkout/$id': typeof CheckoutIdRoute
+  '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/my-transactions': typeof MyTransactionsRoute
+  '/car/$id': typeof CarIdRoute
+  '/checkout/$id': typeof CheckoutIdRoute
+  '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/my-transactions': typeof MyTransactionsRoute
+  '/car/$id': typeof CarIdRoute
+  '/checkout/$id': typeof CheckoutIdRoute
+  '/invoice/$invoiceNumber': typeof InvoiceInvoiceNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/catalog'
+    | '/my-transactions'
+    | '/car/$id'
+    | '/checkout/$id'
+    | '/invoice/$invoiceNumber'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/catalog'
+    | '/my-transactions'
+    | '/car/$id'
+    | '/checkout/$id'
+    | '/invoice/$invoiceNumber'
+  id:
+    | '__root__'
+    | '/'
+    | '/catalog'
+    | '/my-transactions'
+    | '/car/$id'
+    | '/checkout/$id'
+    | '/invoice/$invoiceNumber'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CatalogRoute: typeof CatalogRoute
+  MyTransactionsRoute: typeof MyTransactionsRoute
+  CarIdRoute: typeof CarIdRoute
+  CheckoutIdRoute: typeof CheckoutIdRoute
+  InvoiceInvoiceNumberRoute: typeof InvoiceInvoiceNumberRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/my-transactions': {
+      id: '/my-transactions'
+      path: '/my-transactions'
+      fullPath: '/my-transactions'
+      preLoaderRoute: typeof MyTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalog': {
+      id: '/catalog'
+      path: '/catalog'
+      fullPath: '/catalog'
+      preLoaderRoute: typeof CatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +131,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invoice/$invoiceNumber': {
+      id: '/invoice/$invoiceNumber'
+      path: '/invoice/$invoiceNumber'
+      fullPath: '/invoice/$invoiceNumber'
+      preLoaderRoute: typeof InvoiceInvoiceNumberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/$id': {
+      id: '/checkout/$id'
+      path: '/checkout/$id'
+      fullPath: '/checkout/$id'
+      preLoaderRoute: typeof CheckoutIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/car/$id': {
+      id: '/car/$id'
+      path: '/car/$id'
+      fullPath: '/car/$id'
+      preLoaderRoute: typeof CarIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CatalogRoute: CatalogRoute,
+  MyTransactionsRoute: MyTransactionsRoute,
+  CarIdRoute: CarIdRoute,
+  CheckoutIdRoute: CheckoutIdRoute,
+  InvoiceInvoiceNumberRoute: InvoiceInvoiceNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
