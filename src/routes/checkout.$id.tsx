@@ -108,6 +108,7 @@ function CheckoutInner() {
     const invoice_number = todayInvoiceNumber();
     try {
       // 1. Build tx
+      const { buildUsdcTransferTx } = await import("@/lib/solana");
       const { tx, connection } = await buildUsdcTransferTx(wallet.address, dealerWallet, usdcAmount, network);
       // 2. Register wallet
       await supabase.from("wallet_users").upsert({ wallet_address: wallet.address }, { onConflict: "wallet_address" });
