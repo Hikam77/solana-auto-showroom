@@ -14,7 +14,204 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cars: {
+        Row: {
+          brand: string
+          color: string | null
+          created_at: string
+          description: string | null
+          fuel_type: string | null
+          gallery: Json | null
+          id: string
+          image_url: string | null
+          name: string
+          selling_price: number
+          status: string
+          stock: number
+          transmission: string | null
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          brand: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          fuel_type?: string | null
+          gallery?: Json | null
+          id?: string
+          image_url?: string | null
+          name: string
+          selling_price: number
+          status?: string
+          stock?: number
+          transmission?: string | null
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          brand?: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          fuel_type?: string | null
+          gallery?: Json | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          selling_price?: number
+          status?: string
+          stock?: number
+          transmission?: string | null
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          created_at: string
+          dealer_address: string | null
+          dealer_email: string | null
+          dealer_logo: string | null
+          dealer_name: string
+          dealer_phone: string | null
+          dealer_wallet: string | null
+          dealer_website: string | null
+          id: string
+          idr_per_usdc: number
+          solana_network: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dealer_address?: string | null
+          dealer_email?: string | null
+          dealer_logo?: string | null
+          dealer_name?: string
+          dealer_phone?: string | null
+          dealer_wallet?: string | null
+          dealer_website?: string | null
+          id?: string
+          idr_per_usdc?: number
+          solana_network?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dealer_address?: string | null
+          dealer_email?: string | null
+          dealer_logo?: string | null
+          dealer_name?: string
+          dealer_phone?: string | null
+          dealer_wallet?: string | null
+          dealer_website?: string | null
+          id?: string
+          idr_per_usdc?: number
+          solana_network?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      transaction_items: {
+        Row: {
+          car_id: string
+          car_name: string | null
+          created_at: string
+          id: string
+          quantity: number
+          transaction_id: string
+          unit_price: number
+        }
+        Insert: {
+          car_id: string
+          car_name?: string | null
+          created_at?: string
+          id?: string
+          quantity?: number
+          transaction_id: string
+          unit_price: number
+        }
+        Update: {
+          car_id?: string
+          car_name?: string | null
+          created_at?: string
+          id?: string
+          quantity?: number
+          transaction_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_items_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_items_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          created_at: string
+          id: string
+          invoice_number: string
+          payment_status: string
+          total_idr: number
+          total_usdc: number
+          tx_signature: string | null
+          updated_at: string
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invoice_number: string
+          payment_status?: string
+          total_idr: number
+          total_usdc: number
+          tx_signature?: string | null
+          updated_at?: string
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invoice_number?: string
+          payment_status?: string
+          total_idr?: number
+          total_usdc?: number
+          tx_signature?: string | null
+          updated_at?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
+      wallet_users: {
+        Row: {
+          created_at: string
+          id: string
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
